@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+option go_package = "bunker.api";
+
+import "google/protobuf/wrappers.proto";
+
+message PlayerCharacteristic {
+  enum Gender {
+    GENDER_UNSPECIFIED = 0;
+    GENDER_MALE = 1;
+    GENDER_FEMALE = 2;
+  }
+  enum Orientation {
+    ORIENTATION_UNSPECIFIED = 0;
+    ORIENTATION_STRAIGHT = 1;
+    ORIENTATION_BI = 2;
+    ORIENTATION_HOMO = 3;
+  }
+
+  oneof value {
+    int32 age = 1;
+    Gender gender = 2;
+    Orientation orientation = 3;
+    string backpack = 4;
+  }
+}
+
+message RevealPlayerCharacteristicRequest {
+  int64 id = 1;
+}
+
+message RevealPlayerCharacteristicResponse {
+  PlayerCharacteristic characteristic = 1;
+}
+
+service BunkerGameService {
+  rpc RevealPlayerCharacteristic(RevealPlayerCharacteristicRequest) returns (RevealPlayerCharacteristicResponse);
+}
